@@ -28,6 +28,17 @@ public class Main {
      * @return el número de columnas del tablero, es decir, el número entre tamMin y tamMax dado por el usuario.
      */
     // TODO escribe el método pedirTamTablero descrito en el comentario de arriba.
+    private static int pedirTamTablero(Scanner entrada, int tamMin, int tamMax){
+        System.out.print("Introduce un tamaño del tablero(min:"+tamMin+" max:"+tamMax+"):");
+        int numElegido = entrada.nextInt();
+        if(numElegido < tamMin){
+            numElegido = tamMin;
+        }else if(numElegido > tamMax){
+            numElegido = tamMax;
+        }
+
+        return numElegido;
+    }
 
     /**
      * Crea un array de caracteres de un tamaño dado por columnas.
@@ -36,6 +47,23 @@ public class Main {
      * @return el tablero, es decir, el array de char inicializado con * o números.
      */
     // TODO escribe el método crearTablero descrito en el comentario de arriba.
+    private static char[] crearTablero(int columnas){
+        char[] tabla = new char[columnas];
+        for(int i = 0;i < columnas;i++){
+            double rang = Math.random();
+            if(rang > 0.7){
+                tabla[i] = '_';
+            }else{
+                tabla[i] = '*';
+            }
+        }
+        for(int i = 0;i < columnas;i++){
+            if(tabla[i] == '_'){
+                tabla[i] = (""+calcularBombasAlrededor(tabla, i)).charAt(0);
+            }
+        }
+        return tabla;
+    }
 
     /**
      * Este método lo puedes usar en el método crearTablero para calcular el número que se debe poner donde no hay
@@ -46,6 +74,34 @@ public class Main {
      * @return número de bombas que hay alrededor del indice en el tablero.
      */
     // TODO escribe el método calcularBombasAlrededor descrito en el comentario de arriba.
+    static private int calcularBombasAlrededor(char[] tablero, int indice){
+        int
+        puntero = indice,
+        cantidadBombas = 0;
+
+        //calcular a izquierda
+        puntero--;
+        if(!(puntero == -1)){
+            while(tablero[puntero] == '*'){
+                cantidadBombas++;
+                puntero--;
+                if(puntero == -1){break;}
+            }
+        }
+
+        //calcular a derecha
+        puntero = indice + 1;
+        if(!(puntero >= tablero.length - 1)){
+            while(tablero[puntero] == '*'){
+                cantidadBombas++;
+                puntero++;
+                if(puntero == tablero.length){break;}
+            }
+        }
+        
+        
+        return cantidadBombas;
+    }
 
     /**
      * Método que muestra el tablero usando un formato comprensible por el usuario.
