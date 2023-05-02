@@ -1,13 +1,22 @@
 package es.rgmf;
 
 import java.util.Scanner;
+import es.nadelocos.MainVdos;
 
 public class Main {
 
     public static void main(String[] args) {
+
 	    char[] tablero;
         int columnas;
         Scanner entrada = new Scanner(System.in);
+
+        System.out.print("quieres ejecutar el segundo buscaminas?(si/no):");
+        if(entrada.nextLine().toLowerCase().equals("si")){
+            new MainVdos().main(args);
+            entrada.close();
+            return;
+        }
 
         System.out.println("Bienvenid@ al Buscaminas");
         System.out.println("==================================================================");
@@ -27,7 +36,7 @@ public class Main {
      * @param tamMax máximo tamaño de tablero válido.
      * @return el número de columnas del tablero, es decir, el número entre tamMin y tamMax dado por el usuario.
      */
-    // TODO escribe el método pedirTamTablero descrito en el comentario de arriba.
+    // HECHO: escribe el método pedirTamTablero descrito en el comentario de arriba.
     private static int pedirTamTablero(Scanner entrada, int tamMin, int tamMax){
         System.out.print("Introduce un tamaño del tablero(min:"+tamMin+" max:"+tamMax+"):");
         int numElegido = entrada.nextInt();
@@ -46,7 +55,7 @@ public class Main {
      * @param columnas tamaño del tablero, es decir, número de elementos del array de caracteres.
      * @return el tablero, es decir, el array de char inicializado con * o números.
      */
-    // TODO escribe el método crearTablero descrito en el comentario de arriba.
+    // HECHO: escribe el método crearTablero descrito en el comentario de arriba.
     private static char[] crearTablero(int columnas){
         char[] tabla = new char[columnas];
         for(int i = 0;i < columnas;i++){
@@ -73,7 +82,7 @@ public class Main {
      * @param indice posición del array en el que se quiere calcular el número de bombas que hay alrededor.
      * @return número de bombas que hay alrededor del indice en el tablero.
      */
-    // TODO escribe el método calcularBombasAlrededor descrito en el comentario de arriba.
+    // HECHO: escribe el método calcularBombasAlrededor descrito en el comentario de arriba.
     static private int calcularBombasAlrededor(char[] tablero, int indice){
         int
         puntero = indice,
