@@ -33,6 +33,7 @@ public class Window extends JFrame{
 
         for(int x = 0; x < twidth;x++){
             for(int y = 0; y < theight;y++){
+                final int _x = x,_y = y;
                 mapa[x][y] = new JButton();
                 JButton boton = mapa[x][y];
                 boton.setSize(new Dimension(width,height));
@@ -52,16 +53,20 @@ public class Window extends JFrame{
                                     window.remove(mapa[x][y]);
                                 }
                             }
-                            //TODO: poner pantalla de perder
                         }
                     });
                 }else{
                     //libre
                     boton.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
-                            //TODO: en caso de pulsar boton normal
-                            if
-                            boton.removeActionListener(this);
+                            if(buscaminas.mapaNum[_x][_y] == 0){
+                                minasEn0(_x,_y,buscaminas,this);
+                            }else{
+                                boton.setSelected(true);
+                                boton.setText(""+buscaminas.mapaNum[_x][_y]);
+                                buscaminas.mapa[_x][_y] = '.';
+                                boton.removeActionListener(this);
+                            }
                         }
                     });
                 }
@@ -72,6 +77,27 @@ public class Window extends JFrame{
 
         setSize(new Dimension(700,700));
         setVisible(true);
+    }
+
+    private void minasEn0(int x, int y,Buscaminas buscaminas, ActionListener action){
+         
+        if(x < buscaminas.ancho && x >= 0 && y < buscaminas.alto && y >= 0 && buscaminas.obtenerPuntoEnMapa(x, y) == '_' && buscaminas.obtenerEnMapaNum(x, y) == 0){
+            JButton boton = this.mapa[x][y];
+            System.out.println("si");
+            boton.setSelected(true);
+            boton.setText(""+buscaminas.mapaNum[x][y]);
+            buscaminas.mapa[x][y] = '.';
+            boton.removeActionListener(action);
+            minasEn0(x-1, y, buscaminas, action);
+            minasEn0(x-1, y+1, buscaminas, action);  
+            minasEn0(x-1, y-1, buscaminas, action);
+            minasEn0(x, y, buscaminas, action);
+            minasEn0(x, y+1, buscaminas, action);
+            minasEn0(x, y-1, buscaminas, action);
+            minasEn0(x+1, y, buscaminas, action);
+            minasEn0(x+1, y+1, buscaminas, action);
+            minasEn0(x+1, y-1, buscaminas, action);
+        }
     }
     
 }

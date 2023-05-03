@@ -80,6 +80,14 @@ public class Buscaminas {
         return false;
     }
 
+    public char obtenerPuntoEnMapa(int x,int y){
+        return mapa[x][y];
+    }
+
+    public int obtenerEnMapaNum(int x,int y){
+        return mapaNum[x][y];
+    }
+
     public void mostrarBuscaminasEnConsola(){
         for(int y = 0; y < alto;y++){
             for(int x = 0; x < ancho;x++){
